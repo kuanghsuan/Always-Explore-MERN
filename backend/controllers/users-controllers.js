@@ -1,4 +1,6 @@
 const { validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const HttpError = require("../models/http-error");
 const User = require("../models/user");
 
@@ -37,11 +39,18 @@ const singup = async (req, res, next) => {
     return next(error);
   }
 
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12);
+  } catch (err) {
+    return next(new HttpError("Could not create user, please try again.", 500));
+  }
+
   const createdUser = User({
     name,
     email,
     image: req.file.path,
-    password,
+    password: hashedPassword,
     places: [],
   });
 
@@ -51,7 +60,22 @@ const singup = async (req, res, next) => {
     const error = new HttpError("Sign up failed, please try again.", 500);
     return next(error);
   }
-  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
+
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: createdUser.id, email: createdUser.email },
+      "supersecrete_dont_share",
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Sign up failed, please try again.", 500);
+    return next(error);
+  }
+
+  res
+    .status(201)
+    .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
 const login = async (req, res, next) => {
@@ -65,19 +89,46 @@ const login = async (req, res, next) => {
     const error = new HttpError("Login fail", 500);
     return next(error);
   }
-  if (!existingUser || existingUser.password !== password) {
+  if (!existingUser) {
     return next(
       new HttpError(
         "Could not identify user, credentials seem to be wrong.",
-        401
+        403
       )
     );
   }
 
-  res.json({
-    message: "Logged in!",
-    user: existingUser.toObject({ getters: true }),
-  });
+  let isValidPassword = false;
+  try {
+    isValidPassword = await bcrypt.compare(password, existingUser.password);
+  } catch (err) {
+    new HttpError("Could not log you in, credentials seem to be wrong.", 500);
+  }
+
+  if (!isValidPassword) {
+    return next(
+      new HttpError(
+        "Could not identify user, credentials seem to be wrong.",
+        403
+      )
+    );
+  }
+
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: existingUser.id, email: existingUser.email },
+      "supersecrete_dont_share",
+      { expiresIn: "1h" }
+    );
+  } catch (err) {
+    const error = new HttpError("Login up failed, please try again.", 500);
+    return next(error);
+  }
+
+  res
+    .status(201)
+    .json({ userId: existingUser.id, email: existingUser.email, token: token });
 };
 
 exports.getUsers = getUsers;
