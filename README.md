@@ -65,9 +65,6 @@ $ npm run start // this will run the files in docs, this behavior is exactly the
 ```
 
 ## backend usage(PORT: 5000)
-
-### Start
-
 ```terminal
 $ cd backend   // go to backend folder
 $ npm i       // npm install pacakges
