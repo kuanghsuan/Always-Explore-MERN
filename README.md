@@ -55,7 +55,7 @@ $ npm run build // this will compile the react code using webpack and generate a
 $ npm run start // this will run the files in docs, this behavior is exactly the same how gh-pages will run your static site
 ```
 
-## Backend usage(PORT: 5000)
+## Backend usage (PORT: 5000)
 ```terminal
 $ cd backend   // go to backend folder
 $ npm install       // npm install pacakges
