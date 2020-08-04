@@ -40,7 +40,7 @@ $ npm install
 - [MongoDB](https://gist.github.com/nrollr/9f523ae17ecdbb50311980503409aeb3)
 - [Node](https://nodejs.org/en/download/)
 - [npm](https://nodejs.org/en/download/package-manager/)
-- [express] (https://expressjs.com/en/guide/routing.html/)
+- [express](https://expressjs.com/en/guide/routing.html/)
 
 notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
 
