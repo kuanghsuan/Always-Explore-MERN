@@ -17,19 +17,21 @@ MERN stack is the idea of using Javascript/Node for fullstack web development.
 
 ## Clone or download
 ```terminal
-$ git clone https://github.com/kuanghsuan/always-explore.git
-$ npm i
+$ git clone https://github.com/kuanghsuan/Always-Explore-MERN.git
+$ cd Always-Explore-MERN
+$ npm install
 ```
 
 ## Project Structure
 ```terminal
-frontend/
-   package.json
-   .env (to create .env, check [prepare your secret session])
-backend/
-   nodemon.json
-   package.json
-...
+/Always-Explore-MERN
+  frontend/
+     package.json
+     .env (to create .env, check [prepare your secret session])
+  backend/
+     nodemon.json
+     package.json
+  README.md
 ```
 
 # Usage (run fullstack app on your machine)
@@ -56,7 +58,7 @@ $ npm run start // this will run the files in docs, this behavior is exactly the
 ## Backend usage(PORT: 5000)
 ```terminal
 $ cd backend   // go to backend folder
-$ npm i       // npm install pacakges
+$ npm install       // npm install pacakges
 $ npm start // run it locally
 ```
 
@@ -64,7 +66,7 @@ $ npm start // run it locally
 ```terminal
 $ brew tap heroku/brew && brew install heroku //install the heroku cli
 $ cd backend // got to the backend folder
-$ npm i -g heroku
+$ git init
 $ heroku login // then enter your heroku password 
 ...
 $ heroku git:clone -a always-explore
@@ -76,8 +78,8 @@ $ git push heroku master
 
 ## Deploy frontend to [Firebase](https://firebase.google.com/docs/hosting/deploying)
 ```terminal
-$ curl -sL https://firebase.tools | bash // install the firebase cli
-$ cd frontend // go to the frontend folder
+$ curl -sL https://firebase.tools | bash       // install the firebase cli
+$ cd frontend     // go to the frontend folder
 $ firebase init
 ...
 $ firebase deploy
