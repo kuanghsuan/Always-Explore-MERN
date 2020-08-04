@@ -1,4 +1,4 @@
-# Alays Expore-MERN
+# Always Expore-MERN
 <h1 align="center">
 🌐 MERN Stack
 </h1>
